@@ -1,0 +1,41 @@
+<mat-form-field appearance="standard">
+  <mat-label>Search</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Master 2" #input>
+</mat-form-field>
+
+<div class="base-container mat-elevation-z8">
+  <div class="base-loading-shade"
+       *ngIf="isLoadingResults || isRateLimitReached">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="base-rate-limit-reached" *ngIf="isRateLimitReached">
+      API rate limit has been reached. It will be reset in one minute.
+    </div>
+  </div>
+
+  <div class="base-table-container">
+
+    <table mat-table [dataSource]="dataSource" class="base-table"
+           matSort matSortActive="name" matSortDisableClear matSortDirection="asc">
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>
+        <div mat-sort-header><strong>Name</strong></div></th>
+        <td mat-cell *matCellDef="let row">{{row.name}}</td>
+      </ng-container>
+
+      <!-- Address Column -->
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>
+          <div mat-sort-header><strong>Address</strong></div>
+        </th>
+        <td mat-cell *matCellDef="let row">{{row.address}}</td>
+      </ng-container>    
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+
+  <mat-paginator [length]="resultsLength" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+</div>

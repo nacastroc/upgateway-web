@@ -2,9 +2,9 @@ import { IBaseModel } from "../interfaces/IBaseModel";
 import { Gateway } from "./gateway";
 
 export class Peripheral implements IBaseModel {
-    id: number | undefined;
-    vendor: string | undefined;
-    date: string | Date | undefined;
+    id: number;
+    vendor: string;
+    date: string | Date;
     status: boolean = true;
-    gateway: Gateway | undefined;
+    gateway: Gateway;
 }
