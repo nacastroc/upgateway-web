@@ -14,11 +14,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { GatewaysComponent } from './gateways.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { AddComponent } from './add/add.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     GatewaysComponent,
-    ListComponent
+    ListComponent,
+    AddComponent
   ],
   imports: [
     CommonModule,
@@ -30,9 +35,12 @@ import { GatewaysComponent } from './gateways.component';
     MatSortModule,
     MatProgressSpinnerModule,
     MatTableModule,
-    MatInputModule, 
+    MatInputModule,
     MatFormFieldModule,
-    MatCardModule
+    MatCardModule,
+    MatMenuModule,
+    MatButtonModule,
+    ReactiveFormsModule
   ]
 })
 export class GatewaysModule { }

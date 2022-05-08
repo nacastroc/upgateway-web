@@ -27,13 +27,13 @@ export abstract class BaseService<T extends IBaseModel> {
       { params: this.paramService.getParams(search, page, limit, order) });
   }
 
-  get(id: number, search?: any): Observable<any> {
+  get(id: number | string, search?: any): Observable<any> {
     return this.http.get<T>(this.getUrl() + '/' + id,
       { params: this.paramService.getParams(search) });
   }
 
   save(item: any, toastBool = true): Observable<any> {
-    const ask = !item.id;
+    const ask = !item.id && !item.serial;
     const toast = this.toastService.observe({
       loading: !!ask ? 'Saving..' : 'Updating...',
       success: `${!!ask ? 'Save' : 'Update'} successful`,
@@ -43,7 +43,8 @@ export abstract class BaseService<T extends IBaseModel> {
       const obs = this.http.post<T>(this.getUrl(), item);
       return !!toastBool ? obs.pipe(toast) : obs;
     } else {
-      const obs = this.http.put<T>(this.getUrl() + '/' + item.id, item);
+      const id = !!item.id ? item.id : item.serial;
+      const obs = this.http.put<T>(this.getUrl() + '/' + id, item);
       return !!toastBool ? obs.pipe(toast) : obs;
     }
   }
