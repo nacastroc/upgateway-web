@@ -1,0 +1,84 @@
+<mat-card class="card-container">
+    <mat-card-title>
+        Peripherals
+    </mat-card-title>
+    <ng-container *ngIf="!loading; else loadingTemplate">
+        <ng-container *ngIf="gateway; else noGatewayTemplate">
+            <ng-container [ngTemplateOutlet]="peripheralsTemplate"></ng-container>
+        </ng-container>
+    </ng-container>
+    <mat-card-actions>
+        <button mat-button [routerLink]="['/gateways/list']">BACK</button>
+    </mat-card-actions>
+</mat-card>
+
+<ng-template #peripheralsTemplate>
+    <mat-card-subtitle>
+        for gateway <strong>{{ gateway.name }}</strong>@<strong>{{ gateway.address }}</strong>
+    </mat-card-subtitle>
+    <mat-card-content>
+        <ng-container *ngIf="gateway.Peripherals && gateway.Peripherals.length > 0; else noPeripheralsTemplate">
+            <mat-list>
+                <mat-list-item *ngFor="let peripheral of gateway.Peripherals; last as last">
+                    <mat-icon mat-list-icon *ngIf="peripheral.status" matTooltip="Online">power</mat-icon>
+                    <mat-icon mat-list-icon *ngIf="!peripheral.status" matTooltip="Offline" color="warn">power_off</mat-icon>
+                    <h2 matLine>{{peripheral.vendor}}</h2>
+                    <p matLine>Created on {{peripheral.date | date}}</p>
+                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="actions">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu" xPosition="before">                    
+                    <button mat-menu-item (click)="edit(peripheral.id)">
+                        <mat-icon>edit</mat-icon>
+                        <span>Edit</span>
+                    </button>
+                    <button mat-menu-item (click)="delete(peripheral.id)">
+                        <mat-icon>delete</mat-icon>
+                        <span>Delete</span>
+                    </button>
+                    </mat-menu>
+                    <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+                </mat-list-item>            
+            </mat-list>
+        </ng-container>
+        <ng-template #noPeripheralsTemplate>
+            <mat-list>
+            <mat-list-item>
+                <mat-icon mat-list-icon>message</mat-icon>
+                <h2 matLine>No peripherals here</h2>
+                <p matLine>Click the plus button to add one</p>
+            </mat-list-item>            
+        </mat-list>
+        </ng-template>
+    </mat-card-content>
+    <div class="plus-button">
+        <ng-container *ngIf="gateway.Peripherals.length < 10; else noPlusTemplate">
+            <button [routerLink]="['/peripherals/add', gateway.serial]" mat-fab color="accent" aria-label="Add peripheral">
+                <mat-icon>add</mat-icon>
+            </button>
+        </ng-container>
+        <ng-template #noPlusTemplate>
+            <button mat-fab disabled aria-label="Add peripheral">
+                <mat-icon>add</mat-icon>
+            </button>
+        </ng-template>
+    </div>
+</ng-template>
+
+<ng-template #loadingTemplate>
+    <mat-card-subtitle>
+        Loading data...
+    </mat-card-subtitle>
+    <mat-card-content>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-content>
+</ng-template>
+
+<ng-template #noGatewayTemplate>
+    <mat-card-subtitle>
+        Oops, there is something wrong...
+    </mat-card-subtitle>
+    <mat-card-content>
+        <p>We were unable to find the specified gateway and its peripherals.</p>
+    </mat-card-content>
+</ng-template>

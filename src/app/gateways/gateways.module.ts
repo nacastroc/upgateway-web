@@ -18,12 +18,15 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { AddComponent } from './add/add.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DeleteComponent } from './dialogs/delete/delete.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     GatewaysComponent,
     ListComponent,
-    AddComponent
+    AddComponent,
+    DeleteComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +43,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCardModule,
     MatMenuModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ]
 })
 export class GatewaysModule { }

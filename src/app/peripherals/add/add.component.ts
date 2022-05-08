@@ -2,19 +2,20 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/co
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntil } from 'rxjs';
-import { Gateway } from 'src/app/_core/models/gateway';
-import { GatewaysService } from 'src/app/_core/services/gateways/gateways.service';
+import { Peripheral } from 'src/app/_core/models/peripheral';
+import { PeripheralsService } from 'src/app/_core/services/peripherals/peripherals.service';
 import { DestroyComponent } from 'src/app/_core/utils/destroy.component';
 
 @Component({
-  selector: 'app-gateway-add',
+  selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.css']
 })
 export class AddComponent extends DestroyComponent implements OnInit, AfterViewInit {
 
   form: FormGroup;
-  gateway = new Gateway();
+  id: number;
+  peripheral = new Peripheral();
   serial: string;
   title: string;
 
@@ -23,56 +24,65 @@ export class AddComponent extends DestroyComponent implements OnInit, AfterViewI
     private cdr: ChangeDetectorRef,
     private fb: FormBuilder,
     private router: Router,
-    private service: GatewaysService
+    private service: PeripheralsService
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.serial = this.activatedRoute.snapshot.params['serial'];
-    this.title = (!!this.serial ? 'Edit ' : 'Create ') + 'a gateway';
+    this.peripheral.gateway = this.serial;
+    this.id = +this.activatedRoute.snapshot.params['id'];
+    this.title = (!!this.id ? 'Edit ' : 'Create ') + 'a peripheral';
     this.initForm();
   }
 
   ngAfterViewInit(): void {
-    if (this.serial) {
+    if (this.id) {
       this.getData();
     }
   }
 
   initForm() {
     this.form = this.fb.group({
-      name: [null, [Validators.required]],
-      address: [null, [Validators.required, Validators.pattern("(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)")]]
+      vendor: [null, [Validators.required]],
+      date: [null, [Validators.required]],
+      status: [null, []]
     });
   }
 
-  get name() { return this.form.get('name'); }
+  get vendor() { return this.form.get('vendor'); }
 
-  get address() { return this.form.get('address'); }
+  get date() { return this.form.get('date'); }
+
+  get status() { return this.form.get('status'); }
 
   getData() {
-    this.service.get(this.serial)
+    this.service.get(this.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
-        this.gateway = res;
+        this.peripheral = res;
         this.form.patchValue({
-          name: this.gateway.name,
-          address: this.gateway.address
+          vendor: this.peripheral.vendor,
+          date: this.peripheral.date,
+          status: this.peripheral.status,
         });
+        this.serial = this.peripheral.Gateway.serial;
+        this.peripheral.gateway = this.serial;
         this.cdr.detectChanges();
       })
   }
 
   save(form: FormGroup) {
     if (form.valid) {
-      this.gateway.name = this.name?.value;
-      this.gateway.address = this.address?.value;
-      this.service.save(this.gateway)
+      this.peripheral.vendor = this.vendor?.value;
+      this.peripheral.date = this.date?.value;
+      this.peripheral.status = !!this.status?.value;
+      this.service.save(this.peripheral)
         .pipe(takeUntil(this.destroy$))
         .subscribe(() => {
           this.form.reset();
-          this.router.navigateByUrl('/gateways/list');
+          this.router.navigateByUrl(`/peripherals/list/${this.serial}`);
         })
     }
   }

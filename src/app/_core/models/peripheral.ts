@@ -6,5 +6,6 @@ export class Peripheral implements IBaseModel {
     vendor: string;
     date: string | Date;
     status: boolean = true;
-    gateway: Gateway;
+    gateway: string;
+    Gateway: Gateway;
 }
