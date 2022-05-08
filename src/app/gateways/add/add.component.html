@@ -1,13 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="save(form)">
     <mat-card class="card-container">
-    <mat-card-title>Gateway</mat-card-title>
-    <mat-card-subtitle>{{ title }}</mat-card-subtitle>
-    <mat-card-content>
+        <mat-card-title>Gateway</mat-card-title>
+        <mat-card-subtitle>{{ title }}</mat-card-subtitle>
+        <mat-card-content>
             <mat-form-field appearance="outline" id="name-input">
                 <mat-label>Name</mat-label>
-                <input matInput 
-                    placeholder="Ex.: Master 1" 
-                    formControlName="name">
+                <input matInput placeholder="Ex.: Master 1" formControlName="name">
                 <mat-hint>The name of the gateway</mat-hint>
                 <mat-error *ngIf="name?.errors?.['required']">
                     Name is required
@@ -25,10 +23,10 @@
                     Address must be a valid IPv4
                 </mat-error>
             </mat-form-field>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-button [routerLink]="['/gateways/list']">BACK</button>
-        <button mat-flat-button color="primary" type="submit" [disabled]="!form.valid">SAVE</button>
-    </mat-card-actions>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button [routerLink]="['/gateways/list']">BACK</button>
+            <button mat-flat-button color="primary" type="submit" [disabled]="!form.valid">SAVE</button>
+        </mat-card-actions>
     </mat-card>
 </form>

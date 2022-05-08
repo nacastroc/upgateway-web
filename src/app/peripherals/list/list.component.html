@@ -21,39 +21,41 @@
             <mat-list>
                 <mat-list-item *ngFor="let peripheral of gateway.Peripherals; last as last">
                     <mat-icon mat-list-icon *ngIf="peripheral.status" matTooltip="Online">power</mat-icon>
-                    <mat-icon mat-list-icon *ngIf="!peripheral.status" matTooltip="Offline" color="warn">power_off</mat-icon>
+                    <mat-icon mat-list-icon *ngIf="!peripheral.status" matTooltip="Offline" color="warn">power_off
+                    </mat-icon>
                     <h2 matLine>{{peripheral.vendor}}</h2>
                     <p matLine>Created on {{peripheral.date | date}}</p>
                     <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="actions">
                         <mat-icon>more_vert</mat-icon>
                     </button>
-                    <mat-menu #menu="matMenu" xPosition="before">                    
-                    <button mat-menu-item (click)="edit(peripheral.id)">
-                        <mat-icon>edit</mat-icon>
-                        <span>Edit</span>
-                    </button>
-                    <button mat-menu-item (click)="delete(peripheral.id)">
-                        <mat-icon>delete</mat-icon>
-                        <span>Delete</span>
-                    </button>
+                    <mat-menu #menu="matMenu" xPosition="before">
+                        <button mat-menu-item (click)="edit(peripheral.id)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                        </button>
+                        <button mat-menu-item (click)="delete(peripheral.id)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                        </button>
                     </mat-menu>
                     <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-                </mat-list-item>            
+                </mat-list-item>
             </mat-list>
         </ng-container>
         <ng-template #noPeripheralsTemplate>
             <mat-list>
-            <mat-list-item>
-                <mat-icon mat-list-icon>message</mat-icon>
-                <h2 matLine>No peripherals here</h2>
-                <p matLine>Click the plus button to add one</p>
-            </mat-list-item>            
-        </mat-list>
+                <mat-list-item>
+                    <mat-icon mat-list-icon>message</mat-icon>
+                    <h2 matLine>No peripherals here</h2>
+                    <p matLine>Click the plus button to add one</p>
+                </mat-list-item>
+            </mat-list>
         </ng-template>
     </mat-card-content>
     <div class="plus-button">
         <ng-container *ngIf="gateway.Peripherals.length < 10; else noPlusTemplate">
-            <button [routerLink]="['/peripherals/add', gateway.serial]" mat-fab color="accent" aria-label="Add peripheral">
+            <button [routerLink]="['/peripherals/add', gateway.serial]" mat-fab color="accent"
+                aria-label="Add peripheral">
                 <mat-icon>add</mat-icon>
             </button>
         </ng-container>

@@ -7,7 +7,7 @@ import { PeripheralsService } from 'src/app/_core/services/peripherals/periphera
 import { DestroyComponent } from 'src/app/_core/utils/destroy.component';
 
 @Component({
-  selector: 'app-add',
+  selector: 'app-peripherals-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.css']
 })
@@ -67,8 +67,7 @@ export class AddComponent extends DestroyComponent implements OnInit, AfterViewI
           date: this.peripheral.date,
           status: this.peripheral.status,
         });
-        this.serial = this.peripheral.Gateway.serial;
-        this.peripheral.gateway = this.serial;
+        this.serial = this.peripheral.gateway;
         this.cdr.detectChanges();
       })
   }
