@@ -12,12 +12,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { GatewaysComponent } from './gateways.component';
 
 @NgModule({
   declarations: [
-    ListComponent
-  ],
-  exports: [
+    GatewaysComponent,
     ListComponent
   ],
   imports: [
@@ -31,7 +31,8 @@ import { MatInputModule } from '@angular/material/input';
     MatProgressSpinnerModule,
     MatTableModule,
     MatInputModule, 
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatCardModule
   ]
 })
 export class GatewaysModule { }

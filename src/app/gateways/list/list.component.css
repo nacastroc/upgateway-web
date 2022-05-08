@@ -1,4 +1,8 @@
 /* Structure */
+.card-container {
+  width: 100%;
+}
+
 .base-container {
     position: relative;
   }

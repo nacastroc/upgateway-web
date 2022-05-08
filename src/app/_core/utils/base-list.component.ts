@@ -53,6 +53,8 @@ export class BaseListComponent<T> extends DestroyComponent implements AfterViewI
     applyFilter(event: Event) {
         const filterValue = (event.target as HTMLInputElement).value;
         this.searchField = filterValue.trim();
+        // If the user performs a search, reset back to the first page.
+        this.paginator.pageIndex = 0;
         this.load();
     }
 

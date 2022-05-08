@@ -1,3 +1,4 @@
+
 export class PaginationResult<T> {
 
     rows: T[];

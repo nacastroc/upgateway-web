@@ -4,7 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { GatewaysModule } from './gateways/gateways.module';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterModule } from '@angular/router';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -13,8 +15,11 @@ import { GatewaysModule } from './gateways/gateways.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    RouterModule.forRoot([]),
+    AppRoutingModule,
     HttpClientModule,
-    GatewaysModule
+    MatToolbarModule,
+    RouterModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
