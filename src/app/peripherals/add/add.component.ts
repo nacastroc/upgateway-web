@@ -64,7 +64,7 @@ export class AddComponent extends DestroyComponent implements OnInit, AfterViewI
         this.peripheral = res;
         this.form.patchValue({
           vendor: this.peripheral.vendor,
-          date: this.peripheral.date,
+          date: new Date(this.peripheral.date),
           status: this.peripheral.status,
         });
         this.serial = this.peripheral.gateway;
