@@ -14,7 +14,7 @@
 
 <ng-template #peripheralsTemplate>
     <mat-card-subtitle>
-        for gateway <strong>{{ gateway.name }}</strong>@<strong>{{ gateway.address }}</strong>
+        for gateway {{ gateway.name }}<strong>@</strong>{{ gateway.address }}
     </mat-card-subtitle>
     <mat-card-content>
         <ng-container *ngIf="gateway.Peripherals && gateway.Peripherals.length > 0; else noPeripheralsTemplate">
